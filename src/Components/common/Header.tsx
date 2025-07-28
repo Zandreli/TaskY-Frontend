@@ -91,7 +91,7 @@ const Header: React.FC = () => {
             </Typography>
             <IconButton onClick={handleProfileMenuOpen} sx={{ p: 0 }}>
               <Avatar
-                src={user?.avatar ? `${process.env.REACT_APP_API_URL?.replace('/api', '') || 'http://localhost:5000'}${user.avatar}` : undefined}
+                src={user?.avatar ? `${import.meta.env.REACT_APP_API_URL?.replace('/api', '') || 'http://localhost:5000'}${user.avatar}` : undefined}
                 sx={{
                   width: 32,
                   height: 32,
@@ -109,12 +109,12 @@ const Header: React.FC = () => {
           <Button component={Link} to="/login" color="inherit" sx={{ color: 'white' }}>
             Login
           </Button>
-          <Button 
-            component={Link} 
-            to="/register" 
-            variant="outlined" 
-            sx={{ 
-              color: 'white', 
+          <Button
+            component={Link}
+            to="/register"
+            variant="outlined"
+            sx={{
+              color: 'white',
               borderColor: 'white',
               '&:hover': {
                 backgroundColor: 'white',
@@ -157,7 +157,7 @@ const Header: React.FC = () => {
                 <ListItem>
                   <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, p: 1 }}>
                     <Avatar
-                      src={user?.avatar ? `${process.env.REACT_APP_API_URL?.replace('/api', '') || 'http://localhost:5000'}${user.avatar}` : undefined}
+                      src={user?.avatar ? `${import.meta.env.REACT_APP_API_URL?.replace('/api', '') || 'http://localhost:5000'}${user.avatar}` : undefined}
                       sx={{ bgcolor: 'primary.main' }}
                     >
                       {user?.firstName?.[0]}{user?.lastName?.[0]}
