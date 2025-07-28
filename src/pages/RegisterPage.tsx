@@ -32,14 +32,22 @@ function Register() {
 const { isPending, mutate } = useMutation({
     mutationKey: ["register"],
     mutationFn: async (newUser: User) => {
-        const response = await axios.post("http://localhost:3000/auth/register", newUser);
+        const response = await axios.post("http://localhost:3000/api/auth/register", newUser);
         return response.data;
     }
 })
 
 function handleSignUp() {
     const newUser = { firstName, lastName, emailAddress, username, password, confirmPassword };
-    mutate(newUser)
+    mutate(newUser, {
+      onSuccess: (data) => {
+        console.log("Registration successful:", data);
+      },
+      onError: (error) => {
+        console.error("Registration failed:", error);
+        alert("Registration failed.");
+      }
+    });
 }
   return (
     <Box component="section" mt={2}>

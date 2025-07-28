@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { taskService, UpdateTaskData } from "../services/taskService";
+import { taskService } from "../services/taskService";
+import type { UpdateTaskData } from "../services/taskService";
 import {
   Box,
   Container,
@@ -43,8 +44,9 @@ const UpdateTask: React.FC = () => {
         title: task.title,
         description: task.description,
       });
-    } catch (err: any) {
-      setError(err.response?.data?.message || "Failed to fetch task details");
+    } catch (err) {
+      console.error("Failed to fetch task details:", err);
+      setError((err as { response?: { data?: { message?: string } } }).response?.data?.message|| "Failed to fetch task details");
     } finally {
       setInitialLoading(false);
     }
@@ -71,9 +73,9 @@ const UpdateTask: React.FC = () => {
       setTimeout(() => {
         navigate("/tasks");
       }, 1500);
-    } catch (err: any) {
+    } catch (err) {
       const errorMessage =
-        err.response?.data?.message ||
+      (err as { response?: { data?: { message?: string } } }).response?.data?.message ||
         "Failed to update task. Please try again.";
       setError(errorMessage);
     } finally {

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { taskService, CreateTaskData } from '../services/taskService';
+import { taskService } from '../services/taskService';
+import type { CreateTaskData } from '../services/taskService';
 import {
   Box,
   Container,
@@ -47,8 +48,9 @@ const NewTask: React.FC = () => {
       setTimeout(() => {
         navigate('/tasks');
       }, 1500);
-    } catch (err: any) {
-      const errorMessage = err.response?.data?.message || 'Failed to create task. Please try again.';
+    } catch (error) {
+      console.error("Failed to create task:", error)
+      const errorMessage = 'Failed to create task. Please try again.';
       setError(errorMessage);
     } finally {
       setLoading(false);

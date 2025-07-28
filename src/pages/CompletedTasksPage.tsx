@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { taskService, Task } from '../services/taskService';
+import { taskService } from '../services/taskService';
+import type { Task } from '../services/taskService';
 import TaskCard from '../Components/Tasks/TaskCard';
 import LoadingSpinner from '../Components/common/LoadingSpinner';
-import ErrorMessage from '../components/common/ErrorMessage';
+import ErrorMessage from '../Components/common/ErrorMessage';
 import {
   Box,
   Container,
@@ -39,7 +40,7 @@ const CompletedTasks: React.FC = () => {
       if (err instanceof Error) {
         setError(err.message);
       } else if (typeof err === 'object' && err !== null && 'response' in err) {
-        setError((err as any).response?.data?.message || 'Failed to fetch completed tasks');
+        setError((err as { response?: { data?: { message?: string } } }).response?.data?.message || 'Failed to fetch completed tasks');
       } else {
         setError('Failed to fetch completed tasks');
       }

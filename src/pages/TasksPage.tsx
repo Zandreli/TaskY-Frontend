@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { taskService, Task } from '../services/taskService';
+import { taskService } from '../services/taskService';
+import type { Task } from '../services/taskService';
 import TaskCard from '../Components/Tasks/TaskCard';
 import LoadingSpinner from '../Components/common/LoadingSpinner';
 import ErrorMessage from '../Components/common/ErrorMessage';
@@ -34,8 +35,9 @@ const Tasks: React.FC = () => {
       setLoading(true);
       const response = await taskService.getActiveTasks();
       setTasks(response.data.tasks);
-    } catch (err: any) {
-      setError(err.response?.data?.message || 'Failed to fetch tasks');
+    } catch (err) {
+      console.error('Failed to fetch tasks:', err);
+      setError((err as { response?: { data?: { message?: string } } }).response?.data?.message || 'Failed to fetch tasks');
     } finally {
       setLoading(false);
     }

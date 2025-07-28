@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { taskService, Task } from '../services/taskService';
+import { taskService } from '../services/taskService';
+import type { Task } from '../services/taskService';
 import TaskCard from '../Components/Tasks/TaskCard';
 import LoadingSpinner from '../Components/common/LoadingSpinner';
 import ErrorMessage from '../Components/common/ErrorMessage';
@@ -37,8 +38,9 @@ const Trash: React.FC = () => {
       setLoading(true);
       const response = await taskService.getDeletedTasks();
       setTasks(response.data.tasks);
-    } catch (err: any) {
-      setError(err.response?.data?.message || 'Failed to fetch deleted tasks');
+    } catch (err) {
+      console.error('Failed to fetch deleted tasks:', err);
+      setError((err as { response?: { data?: { message?: string } } }).response?.data?.message|| 'Failed to fetch deleted tasks');
     } finally {
       setLoading(false);
     }
@@ -76,8 +78,9 @@ const Trash: React.FC = () => {
       await Promise.all(tasks.map(task => taskService.restoreTask(task.id)));
       setTasks([]);
       setSuccess('All tasks restored successfully!');
-    } catch (err: any) {
-      setError(err.response?.data?.message || 'Failed to restore all tasks');
+    } catch (err) {
+      console.error('Failed to restore all tasks:', err);
+      setError((err as { response?: { data?: { message?: string } } }).response?.data?.message || 'Failed to restore all tasks');
     } finally {
       setActionLoading(false);
     }
