@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import { useAuth } from '../context/useAuth';
-import { userService } from '../services/userService';
-import { authService } from '../services/authService';
-import type { UpdateUserData } from '../services/userService';
-import type { UpdatePasswordData } from '../services/authService';
+import React, { useState, useEffect } from "react";
+import { useAuth } from "../context/useAuth";
+import { userService } from "../services/userService";
+import { authService } from "../services/authService";
+import type { UpdateUserData } from "../services/userService";
+import type { UpdatePasswordData } from "../services/authService";
 import {
   Box,
   Container,
@@ -18,15 +18,15 @@ import {
   Tabs,
   Tab,
   Fade,
-} from '@mui/material';
+} from "@mui/material";
 import {
   CameraAlt as CameraIcon,
   Person as PersonIcon,
   Lock as LockIcon,
-} from '@mui/icons-material';
-import LoadingSpinner from '../Components/common/LoadingSpinner';
-import ErrorMessage from '../Components/common/ErrorMessage';
-import SuccessMessage from '../Components/common/SuccessMessage';
+} from "@mui/icons-material";
+import LoadingSpinner from "../Components/common/LoadingSpinner";
+import ErrorMessage from "../Components/common/ErrorMessage";
+import SuccessMessage from "../Components/common/SuccessMessage";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -54,15 +54,17 @@ const Profile: React.FC = () => {
   const { user, updateUser } = useAuth();
   const [tabValue, setTabValue] = useState(0);
   const [formData, setFormData] = useState<UpdateUserData>({
-    firstName: '',
-    lastName: '',
-    username: '',
-    email: ''
+    firstName: "",
+    lastName: "",
+    username: "",
+    email: "",
   });
-  const [passwordData, setPasswordData] = useState<UpdatePasswordData & { confirmPassword: string }>({
-    currentPassword: '',
-    newPassword: '',
-    confirmPassword: ''
+  const [passwordData, setPasswordData] = useState<
+    UpdatePasswordData & { confirmPassword: string }
+  >({
+    currentPassword: "",
+    newPassword: "",
+    confirmPassword: "",
   });
   const [loading, setLoading] = useState(false);
   const [passwordLoading, setPasswordLoading] = useState(false);
@@ -76,7 +78,7 @@ const Profile: React.FC = () => {
         firstName: user.firstName,
         lastName: user.lastName,
         username: user.username,
-        email: user.email
+        email: user.email,
       });
     }
   }, [user]);
@@ -89,7 +91,7 @@ const Profile: React.FC = () => {
   const handleProfileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     });
     clearMessages();
   };
@@ -97,7 +99,7 @@ const Profile: React.FC = () => {
   const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPasswordData({
       ...passwordData,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     });
     clearMessages();
   };
@@ -116,12 +118,11 @@ const Profile: React.FC = () => {
       const response = await userService.updateProfile(formData);
       const updatedUser = response.data.user;
       updateUser(updatedUser);
-      setSuccess('Profile updated successfully!');
+      setSuccess("Profile updated successfully!");
     } catch (err) {
-        console.error("profile update failed:", err);
-        alert("Failed to update profile. Please try again.");
-    }
-    finally {
+      console.error("profile update failed:", err);
+      alert("Failed to update profile. Please try again.");
+    } finally {
       setLoading(false);
     }
   };
@@ -130,12 +131,12 @@ const Profile: React.FC = () => {
     e.preventDefault();
 
     if (passwordData.newPassword !== passwordData.confirmPassword) {
-      setError('New passwords do not match');
+      setError("New passwords do not match");
       return;
     }
 
     if (passwordData.newPassword.length < 6) {
-      setError('New password must be at least 6 characters long');
+      setError("New password must be at least 6 characters long");
       return;
     }
 
@@ -145,17 +146,17 @@ const Profile: React.FC = () => {
     try {
       await authService.updatePassword({
         currentPassword: passwordData.currentPassword,
-        newPassword: passwordData.newPassword
+        newPassword: passwordData.newPassword,
       });
       setPasswordData({
-        currentPassword: '',
-        newPassword: '',
-        confirmPassword: ''
+        currentPassword: "",
+        newPassword: "",
+        confirmPassword: "",
       });
-      setSuccess('Password updated successfully!');
+      setSuccess("Password updated successfully!");
     } catch (err) {
-        console.error("Password update failed:", err);
-        alert("Failed to update password. Please try again.");
+      console.error("Password update failed:", err);
+      alert("Failed to update password. Please try again.");
     } finally {
       setPasswordLoading(false);
     }
@@ -165,13 +166,13 @@ const Profile: React.FC = () => {
     const file = e.target.files?.[0];
     if (!file) return;
 
-    if (!file.type.startsWith('image/')) {
-      setError('Please select a valid image file');
+    if (!file.type.startsWith("image/")) {
+      setError("Please select a valid image file");
       return;
     }
 
     if (file.size > 5 * 1024 * 1024) {
-      setError('Image size must be less than 5MB');
+      setError("Image size must be less than 5MB");
       return;
     }
 
@@ -180,33 +181,34 @@ const Profile: React.FC = () => {
 
     try {
       const formData = new FormData();
-      formData.append('avatar', file);
+      formData.append("avatar", file);
 
       const response = await userService.uploadAvatar(formData);
       const updatedUser = response.data.user;
       updateUser(updatedUser);
-      setSuccess('Profile picture updated successfully!');
-    }  catch (err) {
-        console.error("Profile picture update failed:", err);
-        alert("Failed to update profile picture. Please try again.");
-    }finally {
+      setSuccess("Profile picture updated successfully!");
+    } catch (err) {
+      console.error("Profile picture update failed:", err);
+      alert("Failed to update profile picture. Please try again.");
+    } finally {
       setAvatarLoading(false);
     }
   };
 
   const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric'
+    return new Date(dateString).toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
     });
   };
 
   return (
     <Box
       sx={{
-        minHeight: '100vh',
-        background: 'linear-gradient(135deg, #f0fdf4 0%, #dcfce7 50%, #bbf7d0 100%)',
+        minHeight: "100vh",
+        background:
+          "linear-gradient(135deg, #f0fdf4 0%, #dcfce7 50%, #bbf7d0 100%)",
         py: 4,
       }}
     >
@@ -214,45 +216,57 @@ const Profile: React.FC = () => {
         <Fade in={true} timeout={600}>
           <Card
             sx={{
-              background: 'rgba(255, 255, 255, 0.95)',
-              backdropFilter: 'blur(10px)',
-              border: '1px solid rgba(136, 231, 136, 0.1)',
+              background: "rgba(255, 255, 255, 0.95)",
+              backdropFilter: "blur(10px)",
+              border: "1px solid rgba(136, 231, 136, 0.1)",
               borderRadius: 4,
-              boxShadow: '0 8px 32px rgba(136, 231, 136, 0.2)',
-              overflow: 'hidden',
+              boxShadow: "0 8px 32px rgba(136, 231, 136, 0.2)",
+              overflow: "hidden",
             }}
           >
             {/* Header with gradient background */}
             <Box
               sx={{
-                background: 'linear-gradient(135deg, #88E788 0%, #66BB66 100%)',
-                color: 'white',
+                background: "linear-gradient(135deg, #88E788 0%, #66BB66 100%)",
+                color: "white",
                 p: 4,
               }}
             >
-              <Box sx={{ display: 'flex', alignItems: 'center', gap: 3, flexDirection: { xs: 'column', sm: 'row' } }}>
-                <Box sx={{ position: 'relative' }}>
+              <Box
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 3,
+                  flexDirection: { xs: "column", sm: "row" },
+                }}
+              >
+                <Box sx={{ position: "relative" }}>
                   <Avatar
-                    src={user?.avatar ? `${process.env.REACT_APP_API_URL?.replace('/api', '') || 'http://localhost:3000'}${user.avatar}` : undefined}
+                    src={
+                      user?.avatar
+                        ? `${process.env.REACT_APP_API_URL?.replace("/api", "") || "http://localhost:3000"}${user.avatar}`
+                        : undefined
+                    }
                     sx={{
                       width: 96,
                       height: 96,
-                      border: '4px solid white',
-                      fontSize: '2rem',
+                      border: "4px solid white",
+                      fontSize: "2rem",
                     }}
                   >
-                    {user?.firstName?.[0]}{user?.lastName?.[0]}
+                    {user?.firstName?.[0]}
+                    {user?.lastName?.[0]}
                   </Avatar>
                   {avatarLoading && (
                     <Box
                       sx={{
-                        position: 'absolute',
+                        position: "absolute",
                         inset: 0,
-                        backgroundColor: 'rgba(0, 0, 0, 0.5)',
-                        borderRadius: '50%',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
+                        backgroundColor: "rgba(0, 0, 0, 0.5)",
+                        borderRadius: "50%",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
                       }}
                     >
                       <LoadingSpinner size={24} />
@@ -261,13 +275,13 @@ const Profile: React.FC = () => {
                   <IconButton
                     component="label"
                     sx={{
-                      position: 'absolute',
+                      position: "absolute",
                       bottom: -8,
                       right: -8,
-                      backgroundColor: 'white',
-                      color: 'primary.main',
-                      '&:hover': {
-                        backgroundColor: 'grey.100',
+                      backgroundColor: "white",
+                      color: "primary.main",
+                      "&:hover": {
+                        backgroundColor: "grey.100",
                       },
                     }}
                     disabled={avatarLoading}
@@ -282,7 +296,7 @@ const Profile: React.FC = () => {
                   </IconButton>
                 </Box>
 
-                <Box sx={{ textAlign: { xs: 'center', sm: 'left' } }}>
+                <Box sx={{ textAlign: { xs: "center", sm: "left" } }}>
                   <Typography variant="h4" sx={{ fontWeight: 700, mb: 1 }}>
                     {user?.firstName} {user?.lastName}
                   </Typography>
@@ -290,7 +304,8 @@ const Profile: React.FC = () => {
                     @{user?.username}
                   </Typography>
                   <Typography variant="body2" sx={{ opacity: 0.8 }}>
-                    Member since {user?.dateJoined ? formatDate(user.dateJoined) : 'N/A'}
+                    Member since{" "}
+                    {user?.dateJoined ? formatDate(user.dateJoined) : "N/A"}
                   </Typography>
                 </Box>
               </Box>
@@ -299,12 +314,18 @@ const Profile: React.FC = () => {
             <CardContent sx={{ p: 0 }}>
               {error && (
                 <Box sx={{ p: 3, pb: 0 }}>
-                  <ErrorMessage message={error} onClose={() => setError(null)} />
+                  <ErrorMessage
+                    message={error}
+                    onClose={() => setError(null)}
+                  />
                 </Box>
               )}
               {success && (
                 <Box sx={{ p: 3, pb: 0 }}>
-                  <SuccessMessage message={success} onClose={() => setSuccess(null)} />
+                  <SuccessMessage
+                    message={success}
+                    onClose={() => setSuccess(null)}
+                  />
                 </Box>
               )}
 
@@ -314,8 +335,8 @@ const Profile: React.FC = () => {
                 variant="fullWidth"
                 sx={{
                   borderBottom: 1,
-                  borderColor: 'divider',
-                  '& .MuiTab-root': {
+                  borderColor: "divider",
+                  "& .MuiTab-root": {
                     minHeight: 64,
                   },
                 }}
@@ -336,7 +357,7 @@ const Profile: React.FC = () => {
                 <TabPanel value={tabValue} index={0}>
                   <Box component="form" onSubmit={handleProfileSubmit}>
                     <Grid container spacing={3}>
-                      <Grid size={{xs:12, sm:6 }}>
+                      <Grid size={{ xs: 12, sm: 6 }}>
                         <TextField
                           fullWidth
                           label="First Name"
@@ -348,7 +369,7 @@ const Profile: React.FC = () => {
                           variant="outlined"
                         />
                       </Grid>
-                      <Grid size={{ xs:12, sm:6 }}>
+                      <Grid size={{ xs: 12, sm: 6 }}>
                         <TextField
                           fullWidth
                           label="Last Name"
@@ -360,7 +381,7 @@ const Profile: React.FC = () => {
                           variant="outlined"
                         />
                       </Grid>
-                      <Grid size={{xs:12 }}>
+                      <Grid size={{ xs: 12 }}>
                         <TextField
                           fullWidth
                           label="Username"
@@ -372,7 +393,7 @@ const Profile: React.FC = () => {
                           variant="outlined"
                         />
                       </Grid>
-                      <Grid size={{ xs:12 }}>
+                      <Grid size={{ xs: 12 }}>
                         <TextField
                           fullWidth
                           label="Email"
@@ -385,23 +406,29 @@ const Profile: React.FC = () => {
                           variant="outlined"
                         />
                       </Grid>
-                      <Grid size={{ xs:12 }} >
+                      <Grid size={{ xs: 12 }}>
                         <Button
                           type="submit"
                           variant="contained"
                           disabled={loading}
                           sx={{
-                            background: 'linear-gradient(135deg, #88E788 0%, #66BB66 100%)',
+                            background:
+                              "linear-gradient(135deg, #88E788 0%, #66BB66 100%)",
                             px: 4,
                             py: 1.5,
-                            fontSize: '1rem',
+                            fontSize: "1rem",
                             fontWeight: 600,
-                            '&:hover': {
-                              background: 'linear-gradient(135deg, #66BB66 0%, #4CAF50 100%)',
+                            "&:hover": {
+                              background:
+                                "linear-gradient(135deg, #66BB66 0%, #4CAF50 100%)",
                             },
                           }}
                         >
-                          {loading ? <LoadingSpinner size={24} /> : 'Update Profile'}
+                          {loading ? (
+                            <LoadingSpinner size={24} />
+                          ) : (
+                            "Update Profile"
+                          )}
                         </Button>
                       </Grid>
                     </Grid>
@@ -411,7 +438,7 @@ const Profile: React.FC = () => {
                 <TabPanel value={tabValue} index={1}>
                   <Box component="form" onSubmit={handlePasswordSubmit}>
                     <Grid container spacing={3}>
-                      <Grid size={{ xs:12 }}>
+                      <Grid size={{ xs: 12 }}>
                         <TextField
                           fullWidth
                           label="Current Password"
@@ -424,7 +451,7 @@ const Profile: React.FC = () => {
                           variant="outlined"
                         />
                       </Grid>
-                      <Grid size={{ xs:12 }}>
+                      <Grid size={{ xs: 12 }}>
                         <TextField
                           fullWidth
                           label="New Password"
@@ -438,7 +465,7 @@ const Profile: React.FC = () => {
                           helperText="Password must be at least 6 characters long"
                         />
                       </Grid>
-                      <Grid size={{xs:12 }}>
+                      <Grid size={{ xs: 12 }}>
                         <TextField
                           fullWidth
                           label="Confirm New Password"
@@ -451,23 +478,29 @@ const Profile: React.FC = () => {
                           variant="outlined"
                         />
                       </Grid>
-                      <Grid size={{ xs:12 }}>
+                      <Grid size={{ xs: 12 }}>
                         <Button
                           type="submit"
                           variant="contained"
                           disabled={passwordLoading}
                           sx={{
-                            background: 'linear-gradient(135deg, #88E788 0%, #66BB66 100%)',
+                            background:
+                              "linear-gradient(135deg, #88E788 0%, #66BB66 100%)",
                             px: 4,
                             py: 1.5,
-                            fontSize: '1rem',
+                            fontSize: "1rem",
                             fontWeight: 600,
-                            '&:hover': {
-                              background: 'linear-gradient(135deg, #66BB66 0%, #4CAF50 100%)',
+                            "&:hover": {
+                              background:
+                                "linear-gradient(135deg, #66BB66 0%, #4CAF50 100%)",
                             },
                           }}
                         >
-                          {passwordLoading ? <LoadingSpinner size={24} /> : 'Update Password'}
+                          {passwordLoading ? (
+                            <LoadingSpinner size={24} />
+                          ) : (
+                            "Update Password"
+                          )}
                         </Button>
                       </Grid>
                     </Grid>
@@ -483,4 +516,3 @@ const Profile: React.FC = () => {
 };
 
 export default Profile;
-

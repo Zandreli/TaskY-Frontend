@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import type { SxProps } from '@mui/system';
-import { taskService, } from '../../services/taskService';
-import type { Task } from '../../services/taskService';
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import type { SxProps } from "@mui/system";
+import { taskService } from "../../services/taskService";
+import type { Task } from "../../services/taskService";
 import {
   Card,
   CardContent,
@@ -16,22 +16,22 @@ import {
   DialogContent,
   DialogActions,
   Fade,
-} from '@mui/material';
+} from "@mui/material";
 import {
   CheckCircle as CheckCircleIcon,
   RadioButtonUnchecked as CircleIcon,
   Edit as EditIcon,
   Delete as DeleteIcon,
   Restore as RestoreIcon,
-} from '@mui/icons-material';
-import LoadingSpinner from '../common/LoadingSpinner';
+} from "@mui/icons-material";
+import LoadingSpinner from "../common/LoadingSpinner";
 
 interface TaskCardProps {
   task: Task;
   onTaskUpdate: (taskId: string, updatedTask: Partial<Task>) => void;
   onTaskDelete: (taskId: string) => void;
   showActions?: boolean;
-  variant?: 'default' | 'completed' | 'trash';
+  variant?: "default" | "completed" | "trash";
 }
 
 const TaskCard: React.FC<TaskCardProps> = ({
@@ -39,7 +39,7 @@ const TaskCard: React.FC<TaskCardProps> = ({
   onTaskUpdate,
   onTaskDelete,
   showActions = true,
-  variant = 'default'
+  variant = "default",
 }) => {
   const [loading, setLoading] = useState(false);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
@@ -55,7 +55,7 @@ const TaskCard: React.FC<TaskCardProps> = ({
         onTaskUpdate(task.id, { isCompleted: true });
       }
     } catch (error) {
-      console.error('Error updating task completion:', error);
+      console.error("Error updating task completion:", error);
     } finally {
       setLoading(false);
     }
@@ -68,7 +68,7 @@ const TaskCard: React.FC<TaskCardProps> = ({
       onTaskDelete(task.id);
       setDeleteDialogOpen(false);
     } catch (error) {
-      console.error('Error deleting task:', error);
+      console.error("Error deleting task:", error);
     } finally {
       setLoading(false);
     }
@@ -80,39 +80,39 @@ const TaskCard: React.FC<TaskCardProps> = ({
       await taskService.restoreTask(task.id);
       onTaskUpdate(task.id, { isDeleted: false });
     } catch (error) {
-      console.error('Error restoring task:', error);
+      console.error("Error restoring task:", error);
     } finally {
       setLoading(false);
     }
   };
 
   const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'short',
-      day: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit'
+    return new Date(dateString).toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
     });
   };
 
   const getCardStyles = (): SxProps => {
-      const styles: SxProps = {
-        transition: 'all 0.3s ease',
-        '&:hover': {
-          transform: 'translateY(-2px)',
-          boxShadow: '0 8px 25px rgba(136, 231, 136, 0.2)',
-        },
-      };
+    const styles: SxProps = {
+      transition: "all 0.3s ease",
+      "&:hover": {
+        transform: "translateY(-2px)",
+        boxShadow: "0 8px 25px rgba(136, 231, 136, 0.2)",
+      },
+    };
 
-    if (variant === 'completed') {
+    if (variant === "completed") {
       styles.opacity = 0.8;
-      styles.borderLeft = '4px solid #4CAF50';
-    } else if (variant === 'trash') {
-      styles.borderLeft = '4px solid #f44336';
-      styles.backgroundColor = '#ffebee';
+      styles.borderLeft = "4px solid #4CAF50";
+    } else if (variant === "trash") {
+      styles.borderLeft = "4px solid #f44336";
+      styles.backgroundColor = "#ffebee";
     } else {
-      styles.borderLeft = '4px solid #88E788';
+      styles.borderLeft = "4px solid #88E788";
     }
 
     return styles;
@@ -122,13 +122,20 @@ const TaskCard: React.FC<TaskCardProps> = ({
     <Fade in={true} timeout={300}>
       <Card sx={getCardStyles()}>
         <CardContent>
-          <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', mb: 1 }}>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "flex-start",
+              mb: 1,
+            }}
+          >
             <Typography
               variant="h6"
               component="h3"
               sx={{
-                textDecoration: task.isCompleted ? 'line-through' : 'none',
-                color: task.isCompleted ? 'text.secondary' : 'text.primary',
+                textDecoration: task.isCompleted ? "line-through" : "none",
+                color: task.isCompleted ? "text.secondary" : "text.primary",
                 fontWeight: 600,
               }}
             >
@@ -157,7 +164,7 @@ const TaskCard: React.FC<TaskCardProps> = ({
             {task.description}
           </Typography>
 
-          <Box sx={{ display: 'flex', flexDirection: 'column', gap: 0.5 }}>
+          <Box sx={{ display: "flex", flexDirection: "column", gap: 0.5 }}>
             <Typography variant="caption" color="text.secondary">
               Created: {formatDate(task.dateCreated)}
             </Typography>
@@ -171,20 +178,24 @@ const TaskCard: React.FC<TaskCardProps> = ({
 
         {showActions && (
           <CardActions sx={{ pt: 0, px: 2, pb: 2 }}>
-            <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
-              {variant === 'default' && (
+            <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1 }}>
+              {variant === "default" && (
                 <>
                   <Button
                     onClick={handleComplete}
                     variant={task.isCompleted ? "outlined" : "contained"}
                     size="small"
                     disabled={loading}
-                    startIcon={task.isCompleted ? <CircleIcon /> : <CheckCircleIcon />}
+                    startIcon={
+                      task.isCompleted ? <CircleIcon /> : <CheckCircleIcon />
+                    }
                     sx={{
-                      background: !task.isCompleted ? 'linear-gradient(135deg, #88E788 0%, #66BB66 100%)' : undefined,
+                      background: !task.isCompleted
+                        ? "linear-gradient(135deg, #88E788 0%, #66BB66 100%)"
+                        : undefined,
                     }}
                   >
-                    {task.isCompleted ? 'Mark Incomplete' : 'Mark Complete'}
+                    {task.isCompleted ? "Mark Incomplete" : "Mark Complete"}
                   </Button>
                   <Button
                     component={Link}
@@ -208,7 +219,7 @@ const TaskCard: React.FC<TaskCardProps> = ({
                 </>
               )}
 
-              {variant === 'completed' && (
+              {variant === "completed" && (
                 <>
                   <Button
                     onClick={handleComplete}
@@ -232,7 +243,7 @@ const TaskCard: React.FC<TaskCardProps> = ({
                 </>
               )}
 
-              {variant === 'trash' && (
+              {variant === "trash" && (
                 <Button
                   onClick={handleRestore}
                   variant="contained"
@@ -240,7 +251,8 @@ const TaskCard: React.FC<TaskCardProps> = ({
                   disabled={loading}
                   startIcon={<RestoreIcon />}
                   sx={{
-                    background: 'linear-gradient(135deg, #88E788 0%, #66BB66 100%)',
+                    background:
+                      "linear-gradient(135deg, #88E788 0%, #66BB66 100%)",
                   }}
                 >
                   Restore
@@ -255,25 +267,22 @@ const TaskCard: React.FC<TaskCardProps> = ({
           onClose={() => setDeleteDialogOpen(false)}
           aria-labelledby="delete-dialog-title"
         >
-          <DialogTitle id="delete-dialog-title">
-            Confirm Delete
-          </DialogTitle>
+          <DialogTitle id="delete-dialog-title">Confirm Delete</DialogTitle>
           <DialogContent>
             <Typography>
-              Are you sure you want to delete this task? This action can be undone from the trash.
+              Are you sure you want to delete this task? This action can be
+              undone from the trash.
             </Typography>
           </DialogContent>
           <DialogActions>
-            <Button onClick={() => setDeleteDialogOpen(false)}>
-              Cancel
-            </Button>
+            <Button onClick={() => setDeleteDialogOpen(false)}>Cancel</Button>
             <Button
               onClick={handleDelete}
               color="error"
               variant="contained"
               disabled={loading}
             >
-              {loading ? 'Deleting...' : 'Delete'}
+              {loading ? "Deleting..." : "Delete"}
             </Button>
           </DialogActions>
         </Dialog>
@@ -283,4 +292,3 @@ const TaskCard: React.FC<TaskCardProps> = ({
 };
 
 export default TaskCard;
-

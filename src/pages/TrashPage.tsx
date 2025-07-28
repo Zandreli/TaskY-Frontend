@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import { taskService } from '../services/taskService';
-import type { Task } from '../services/taskService';
-import TaskCard from '../Components/Tasks/TaskCard';
-import LoadingSpinner from '../Components/common/LoadingSpinner';
-import ErrorMessage from '../Components/common/ErrorMessage';
-import SuccessMessage from '../Components/common/SuccessMessage';
+import React, { useState, useEffect } from "react";
+import { taskService } from "../services/taskService";
+import type { Task } from "../services/taskService";
+import TaskCard from "../Components/Tasks/TaskCard";
+import LoadingSpinner from "../Components/common/LoadingSpinner";
+import ErrorMessage from "../Components/common/ErrorMessage";
+import SuccessMessage from "../Components/common/SuccessMessage";
 import {
   Box,
   Container,
@@ -15,12 +15,12 @@ import {
   Grid,
   Alert,
   Fade,
-} from '@mui/material';
+} from "@mui/material";
 import {
   Delete as DeleteIcon,
   Restore as RestoreIcon,
   Warning as WarningIcon,
-} from '@mui/icons-material';
+} from "@mui/icons-material";
 
 const Trash: React.FC = () => {
   const [tasks, setTasks] = useState<Task[]>([]);
@@ -39,8 +39,11 @@ const Trash: React.FC = () => {
       const response = await taskService.getDeletedTasks();
       setTasks(response.data.tasks);
     } catch (err) {
-      console.error('Failed to fetch deleted tasks:', err);
-      setError((err as { response?: { data?: { message?: string } } }).response?.data?.message|| 'Failed to fetch deleted tasks');
+      console.error("Failed to fetch deleted tasks:", err);
+      setError(
+        (err as { response?: { data?: { message?: string } } }).response?.data
+          ?.message || "Failed to fetch deleted tasks",
+      );
     } finally {
       setLoading(false);
     }
@@ -49,21 +52,21 @@ const Trash: React.FC = () => {
   const handleTaskUpdate = (taskId: string, updatedTask: Partial<Task>) => {
     if (updatedTask.isDeleted === false) {
       // Task was restored, remove from trash
-      setTasks(prev => prev.filter(task => task.id !== taskId));
-      setSuccess('Task restored successfully!');
+      setTasks((prev) => prev.filter((task) => task.id !== taskId));
+      setSuccess("Task restored successfully!");
       setTimeout(() => setSuccess(null), 3000);
     } else {
       // Update task in place
-      setTasks(prev =>
-        prev.map(task =>
-          task.id === taskId ? { ...task, ...updatedTask } : task
-        )
+      setTasks((prev) =>
+        prev.map((task) =>
+          task.id === taskId ? { ...task, ...updatedTask } : task,
+        ),
       );
     }
   };
 
   const handleTaskDelete = (taskId: string) => {
-    setTasks(prev => prev.filter(task => task.id !== taskId));
+    setTasks((prev) => prev.filter((task) => task.id !== taskId));
   };
 
   const handleRestoreAll = async () => {
@@ -75,12 +78,15 @@ const Trash: React.FC = () => {
     try {
       setActionLoading(true);
       // Restore all tasks
-      await Promise.all(tasks.map(task => taskService.restoreTask(task.id)));
+      await Promise.all(tasks.map((task) => taskService.restoreTask(task.id)));
       setTasks([]);
-      setSuccess('All tasks restored successfully!');
+      setSuccess("All tasks restored successfully!");
     } catch (err) {
-      console.error('Failed to restore all tasks:', err);
-      setError((err as { response?: { data?: { message?: string } } }).response?.data?.message || 'Failed to restore all tasks');
+      console.error("Failed to restore all tasks:", err);
+      setError(
+        (err as { response?: { data?: { message?: string } } }).response?.data
+          ?.message || "Failed to restore all tasks",
+      );
     } finally {
       setActionLoading(false);
     }
@@ -91,7 +97,8 @@ const Trash: React.FC = () => {
 
     const totalDays = tasks.reduce((acc, task) => {
       const daysSinceDeleted = Math.ceil(
-        (new Date().getTime() - new Date(task.dateUpdated).getTime()) / (1000 * 3600 * 24)
+        (new Date().getTime() - new Date(task.dateUpdated).getTime()) /
+          (1000 * 3600 * 24),
       );
       return acc + daysSinceDeleted;
     }, 0);
@@ -103,11 +110,12 @@ const Trash: React.FC = () => {
     return (
       <Box
         sx={{
-          minHeight: '100vh',
-          background: 'linear-gradient(135deg, #f0fdf4 0%, #dcfce7 50%, #bbf7d0 100%)',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
+          minHeight: "100vh",
+          background:
+            "linear-gradient(135deg, #f0fdf4 0%, #dcfce7 50%, #bbf7d0 100%)",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
         }}
       >
         <LoadingSpinner message="Loading deleted tasks..." />
@@ -118,8 +126,9 @@ const Trash: React.FC = () => {
   return (
     <Box
       sx={{
-        minHeight: '100vh',
-        background: 'linear-gradient(135deg, #f0fdf4 0%, #dcfce7 50%, #bbf7d0 100%)',
+        minHeight: "100vh",
+        background:
+          "linear-gradient(135deg, #f0fdf4 0%, #dcfce7 50%, #bbf7d0 100%)",
         py: 4,
       }}
     >
@@ -128,10 +137,10 @@ const Trash: React.FC = () => {
           <Box>
             <Box
               sx={{
-                display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: { xs: 'flex-start', sm: 'center' },
-                flexDirection: { xs: 'column', sm: 'row' },
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: { xs: "flex-start", sm: "center" },
+                flexDirection: { xs: "column", sm: "row" },
                 gap: 2,
                 mb: 4,
               }}
@@ -146,13 +155,15 @@ const Trash: React.FC = () => {
                   variant="contained"
                   startIcon={<RestoreIcon />}
                   sx={{
-                    background: 'linear-gradient(135deg, #88E788 0%, #66BB66 100%)',
+                    background:
+                      "linear-gradient(135deg, #88E788 0%, #66BB66 100%)",
                     px: 3,
                     py: 1.5,
-                    fontSize: '1rem',
+                    fontSize: "1rem",
                     fontWeight: 600,
-                    '&:hover': {
-                      background: 'linear-gradient(135deg, #66BB66 0%, #4CAF50 100%)',
+                    "&:hover": {
+                      background:
+                        "linear-gradient(135deg, #66BB66 0%, #4CAF50 100%)",
                     },
                   }}
                 >
@@ -161,21 +172,31 @@ const Trash: React.FC = () => {
               )}
             </Box>
 
-            {error && <ErrorMessage message={error} onClose={() => setError(null)} />}
-            {success && <SuccessMessage message={success} onClose={() => setSuccess(null)} />}
+            {error && (
+              <ErrorMessage message={error} onClose={() => setError(null)} />
+            )}
+            {success && (
+              <SuccessMessage
+                message={success}
+                onClose={() => setSuccess(null)}
+              />
+            )}
 
             <Grid container spacing={3} sx={{ mb: 4 }}>
-              <Grid size={{xs:12, md:6}}>
+              <Grid size={{ xs: 12, md: 6 }}>
                 <Card
                   sx={{
-                    background: 'rgba(255, 255, 255, 0.9)',
-                    backdropFilter: 'blur(10px)',
-                    border: '1px solid rgba(244, 67, 54, 0.2)',
-                    borderLeft: '4px solid #f44336',
+                    background: "rgba(255, 255, 255, 0.9)",
+                    backdropFilter: "blur(10px)",
+                    border: "1px solid rgba(244, 67, 54, 0.2)",
+                    borderLeft: "4px solid #f44336",
                   }}
                 >
-                  <CardContent sx={{ textAlign: 'center', py: 3 }}>
-                    <Typography variant="h3" sx={{ color: '#f44336', fontWeight: 700, mb: 1 }}>
+                  <CardContent sx={{ textAlign: "center", py: 3 }}>
+                    <Typography
+                      variant="h3"
+                      sx={{ color: "#f44336", fontWeight: 700, mb: 1 }}
+                    >
                       {tasks.length}
                     </Typography>
                     <Typography variant="body1" color="text.secondary">
@@ -184,17 +205,20 @@ const Trash: React.FC = () => {
                   </CardContent>
                 </Card>
               </Grid>
-              <Grid size={{xs:12, md:6}}>
+              <Grid size={{ xs: 12, md: 6 }}>
                 <Card
                   sx={{
-                    background: 'rgba(255, 255, 255, 0.9)',
-                    backdropFilter: 'blur(10px)',
-                    border: '1px solid rgba(244, 67, 54, 0.2)',
-                    borderLeft: '4px solid #f44336',
+                    background: "rgba(255, 255, 255, 0.9)",
+                    backdropFilter: "blur(10px)",
+                    border: "1px solid rgba(244, 67, 54, 0.2)",
+                    borderLeft: "4px solid #f44336",
                   }}
                 >
-                  <CardContent sx={{ textAlign: 'center', py: 3 }}>
-                    <Typography variant="h3" sx={{ color: '#f44336', fontWeight: 700, mb: 1 }}>
+                  <CardContent sx={{ textAlign: "center", py: 3 }}>
+                    <Typography
+                      variant="h3"
+                      sx={{ color: "#f44336", fontWeight: 700, mb: 1 }}
+                    >
                       {calculateAverageDaysInTrash()}
                     </Typography>
                     <Typography variant="body1" color="text.secondary">
@@ -205,22 +229,25 @@ const Trash: React.FC = () => {
               </Grid>
             </Grid>
 
-            <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
+            <Box sx={{ display: "flex", flexDirection: "column", gap: 3 }}>
               {tasks.length === 0 ? (
                 <Card
                   sx={{
-                    background: 'rgba(255, 255, 255, 0.9)',
-                    backdropFilter: 'blur(10px)',
-                    border: '1px solid rgba(136, 231, 136, 0.1)',
+                    background: "rgba(255, 255, 255, 0.9)",
+                    backdropFilter: "blur(10px)",
+                    border: "1px solid rgba(136, 231, 136, 0.1)",
                   }}
                 >
-                  <CardContent sx={{ textAlign: 'center', py: 8 }}>
-                    <DeleteIcon sx={{ fontSize: 64, color: 'text.secondary', mb: 2 }} />
+                  <CardContent sx={{ textAlign: "center", py: 8 }}>
+                    <DeleteIcon
+                      sx={{ fontSize: 64, color: "text.secondary", mb: 2 }}
+                    />
                     <Typography variant="h5" sx={{ fontWeight: 600, mb: 2 }}>
                       Trash is empty
                     </Typography>
                     <Typography variant="body1" color="text.secondary">
-                      Deleted tasks will appear here. You can restore them or they'll be permanently deleted after 30 days.
+                      Deleted tasks will appear here. You can restore them or
+                      they'll be permanently deleted after 30 days.
                     </Typography>
                   </CardContent>
                 </Card>
@@ -232,11 +259,11 @@ const Trash: React.FC = () => {
                     sx={{
                       mb: 2,
                       borderRadius: 2,
-                      backgroundColor: '#fff3cd',
-                      color: '#856404',
-                      '& .MuiAlert-icon': {
-                        color: '#856404'
-                      }
+                      backgroundColor: "#fff3cd",
+                      color: "#856404",
+                      "& .MuiAlert-icon": {
+                        color: "#856404",
+                      },
                     }}
                   >
                     ⚠️ Tasks in trash will be permanently deleted after 30 days.
@@ -266,4 +293,3 @@ const Trash: React.FC = () => {
 };
 
 export default Trash;
-

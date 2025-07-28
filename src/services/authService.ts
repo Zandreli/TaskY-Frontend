@@ -1,4 +1,4 @@
-import api from './api';
+import api from "./api";
 
 export interface RegisterData {
   firstName: string;
@@ -19,12 +19,12 @@ export interface UpdatePasswordData {
 }
 
 export const authService = {
-  register: (data: RegisterData) => api.post('/auth/register', data),
+  register: (data: RegisterData) => api.post("/auth/register", data),
 
-  login: (data: LoginData) => api.post('/auth/login', data),
+  login: (data: LoginData) => api.post("/auth/login", data),
 
-  logout: () => api.post('/auth/logout'),
+  logout: () => api.post("/auth/logout"),
 
-  updatePassword: (data: UpdatePasswordData) => api.patch('/auth/password', data),
+  updatePassword: (data: UpdatePasswordData) =>
+    api.patch("/auth/password", data),
 };
-

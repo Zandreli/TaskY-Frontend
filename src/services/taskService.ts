@@ -1,4 +1,4 @@
-import api from './api';
+import api from "./api";
 
 export interface Task {
   id: string;
@@ -22,24 +22,32 @@ export interface UpdateTaskData {
 }
 
 export const taskService = {
-  getActiveTasks: () => api.get<{ message: string; tasks: Task[] }>('/tasks'),
+  getActiveTasks: () => api.get<{ message: string; tasks: Task[] }>("/tasks"),
 
-  getCompletedTasks: () => api.get<{ message: string; tasks: Task[] }>('/tasks/completed'),
+  getCompletedTasks: () =>
+    api.get<{ message: string; tasks: Task[] }>("/tasks/completed"),
 
-  getDeletedTasks: () => api.get<{ message: string; tasks: Task[] }>('/tasks/trash'),
+  getDeletedTasks: () =>
+    api.get<{ message: string; tasks: Task[] }>("/tasks/trash"),
 
-  getTaskById: (id: string) => api.get<{ message: string; task: Task }>(`/tasks/${id}`),
+  getTaskById: (id: string) =>
+    api.get<{ message: string; task: Task }>(`/tasks/${id}`),
 
-  createTask: (data: CreateTaskData) => api.post<{ message: string; task: Task }>('/tasks', data),
+  createTask: (data: CreateTaskData) =>
+    api.post<{ message: string; task: Task }>("/tasks", data),
 
-  updateTask: (id: string, data: UpdateTaskData) => api.patch<{ message: string; task: Task }>(`/tasks/${id}`, data),
+  updateTask: (id: string, data: UpdateTaskData) =>
+    api.patch<{ message: string; task: Task }>(`/tasks/${id}`, data),
 
-  deleteTask: (id: string) => api.delete<{ message: string; task: Task }>(`/tasks/${id}`),
+  deleteTask: (id: string) =>
+    api.delete<{ message: string; task: Task }>(`/tasks/${id}`),
 
-  restoreTask: (id: string) => api.patch<{ message: string; task: Task }>(`/tasks/restore/${id}`),
+  restoreTask: (id: string) =>
+    api.patch<{ message: string; task: Task }>(`/tasks/restore/${id}`),
 
-  completeTask: (id: string) => api.patch<{ message: string; task: Task }>(`/tasks/complete/${id}`),
+  completeTask: (id: string) =>
+    api.patch<{ message: string; task: Task }>(`/tasks/complete/${id}`),
 
-  incompleteTask: (id: string) => api.patch<{ message: string; task: Task }>(`/tasks/incomplete/${id}`),
+  incompleteTask: (id: string) =>
+    api.patch<{ message: string; task: Task }>(`/tasks/incomplete/${id}`),
 };
-

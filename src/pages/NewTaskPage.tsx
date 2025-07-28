@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { taskService } from '../services/taskService';
-import type { CreateTaskData } from '../services/taskService';
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { taskService } from "../services/taskService";
+import type { CreateTaskData } from "../services/taskService";
 import {
   Box,
   Container,
@@ -11,15 +11,15 @@ import {
   TextField,
   Button,
   Fade,
-} from '@mui/material';
-import LoadingSpinner from '../Components/common/LoadingSpinner';
-import ErrorMessage from '../Components/common/ErrorMessage';
-import SuccessMessage from '../Components/common/SuccessMessage';
+} from "@mui/material";
+import LoadingSpinner from "../Components/common/LoadingSpinner";
+import ErrorMessage from "../Components/common/ErrorMessage";
+import SuccessMessage from "../Components/common/SuccessMessage";
 
 const NewTask: React.FC = () => {
   const [formData, setFormData] = useState<CreateTaskData>({
-    title: '',
-    description: ''
+    title: "",
+    description: "",
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -30,7 +30,7 @@ const NewTask: React.FC = () => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     });
     // Clear messages when user starts typing
     if (error) setError(null);
@@ -44,13 +44,13 @@ const NewTask: React.FC = () => {
 
     try {
       await taskService.createTask(formData);
-      setSuccess('Task created successfully! Redirecting...');
+      setSuccess("Task created successfully! Redirecting...");
       setTimeout(() => {
-        navigate('/tasks');
+        navigate("/tasks");
       }, 1500);
     } catch (error) {
-      console.error("Failed to create task:", error)
-      const errorMessage = 'Failed to create task. Please try again.';
+      console.error("Failed to create task:", error);
+      const errorMessage = "Failed to create task. Please try again.";
       setError(errorMessage);
     } finally {
       setLoading(false);
@@ -58,14 +58,15 @@ const NewTask: React.FC = () => {
   };
 
   const handleCancel = () => {
-    navigate('/tasks');
+    navigate("/tasks");
   };
 
   return (
     <Box
       sx={{
-        minHeight: '100vh',
-        background: 'linear-gradient(135deg, #f0fdf4 0%, #dcfce7 50%, #bbf7d0 100%)',
+        minHeight: "100vh",
+        background:
+          "linear-gradient(135deg, #f0fdf4 0%, #dcfce7 50%, #bbf7d0 100%)",
         py: 4,
       }}
     >
@@ -73,16 +74,20 @@ const NewTask: React.FC = () => {
         <Fade in={true} timeout={600}>
           <Card
             sx={{
-              background: 'rgba(255, 255, 255, 0.95)',
-              backdropFilter: 'blur(10px)',
-              border: '1px solid rgba(136, 231, 136, 0.1)',
+              background: "rgba(255, 255, 255, 0.95)",
+              backdropFilter: "blur(10px)",
+              border: "1px solid rgba(136, 231, 136, 0.1)",
               borderRadius: 4,
-              boxShadow: '0 8px 32px rgba(136, 231, 136, 0.2)',
+              boxShadow: "0 8px 32px rgba(136, 231, 136, 0.2)",
             }}
           >
             <CardContent sx={{ p: 4 }}>
               <Box textAlign="center" mb={4}>
-                <Typography variant="h4" component="h1" sx={{ fontWeight: 700, mb: 1 }}>
+                <Typography
+                  variant="h4"
+                  component="h1"
+                  sx={{ fontWeight: 700, mb: 1 }}
+                >
                   Create New Task
                 </Typography>
                 <Typography variant="body1" color="text.secondary">
@@ -91,7 +96,12 @@ const NewTask: React.FC = () => {
               </Box>
 
               <Box component="form" onSubmit={handleSubmit}>
-                {error && <ErrorMessage message={error} onClose={() => setError(null)} />}
+                {error && (
+                  <ErrorMessage
+                    message={error}
+                    onClose={() => setError(null)}
+                  />
+                )}
                 {success && <SuccessMessage message={success} />}
 
                 <TextField
@@ -124,7 +134,13 @@ const NewTask: React.FC = () => {
                   helperText={`${formData.description.length}/500 characters`}
                 />
 
-                <Box sx={{ display: 'flex', gap: 2, flexDirection: { xs: 'column', sm: 'row' } }}>
+                <Box
+                  sx={{
+                    display: "flex",
+                    gap: 2,
+                    flexDirection: { xs: "column", sm: "row" },
+                  }}
+                >
                   <Button
                     type="button"
                     variant="outlined"
@@ -137,19 +153,25 @@ const NewTask: React.FC = () => {
                   <Button
                     type="submit"
                     variant="contained"
-                    disabled={loading || !formData.title.trim() || !formData.description.trim()}
+                    disabled={
+                      loading ||
+                      !formData.title.trim() ||
+                      !formData.description.trim()
+                    }
                     sx={{
                       flex: 1,
-                      background: 'linear-gradient(135deg, #88E788 0%, #66BB66 100%)',
+                      background:
+                        "linear-gradient(135deg, #88E788 0%, #66BB66 100%)",
                       py: 1.5,
-                      fontSize: '1rem',
+                      fontSize: "1rem",
                       fontWeight: 600,
-                      '&:hover': {
-                        background: 'linear-gradient(135deg, #66BB66 0%, #4CAF50 100%)',
+                      "&:hover": {
+                        background:
+                          "linear-gradient(135deg, #66BB66 0%, #4CAF50 100%)",
                       },
                     }}
                   >
-                    {loading ? <LoadingSpinner size={24} /> : 'Create Task'}
+                    {loading ? <LoadingSpinner size={24} /> : "Create Task"}
                   </Button>
                 </Box>
               </Box>
@@ -162,4 +184,3 @@ const NewTask: React.FC = () => {
 };
 
 export default NewTask;
-

@@ -1,6 +1,6 @@
-import React, { createContext, useState, useEffect } from 'react';
-import type { ReactNode } from 'react';
-import type { User } from '../services/userService';
+import React, { createContext, useState, useEffect } from "react";
+import type { ReactNode } from "react";
+import type { User } from "../services/userService";
 
 export interface AuthContextType {
   user: User | null;
@@ -12,7 +12,9 @@ export interface AuthContextType {
   loading: boolean;
 }
 
-export const AuthContext = createContext<AuthContextType | undefined>(undefined);
+export const AuthContext = createContext<AuthContextType | undefined>(
+  undefined,
+);
 
 interface AuthProviderProps {
   children: ReactNode;
@@ -25,8 +27,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   // Initialize state from localStorage on component mount
   useEffect(() => {
-    const storedUser = localStorage.getItem('user');
-    const storedToken = localStorage.getItem('token');
+    const storedUser = localStorage.getItem("user");
+    const storedToken = localStorage.getItem("token");
 
     if (storedUser && storedToken) {
       setUser(JSON.parse(storedUser));
@@ -38,38 +40,37 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const login = (userData: User, authToken: string) => {
     setUser(userData);
     setToken(authToken);
-    localStorage.setItem('user', JSON.stringify(userData));
-    localStorage.setItem('token', authToken);
+    localStorage.setItem("user", JSON.stringify(userData));
+    localStorage.setItem("token", authToken);
   };
 
   const logout = () => {
     setUser(null);
     setToken(null);
-    localStorage.removeItem('user');
-    localStorage.removeItem('token');
+    localStorage.removeItem("user");
+    localStorage.removeItem("token");
   };
 
   const updateUser = (userData: User) => {
     setUser(userData);
-    localStorage.setItem('user', JSON.stringify(userData));
+    localStorage.setItem("user", JSON.stringify(userData));
   };
 
   const isAuthenticated = user !== null && token !== null;
 
   return (
-    <AuthContext.Provider value={{
-      user,
-      token,
-      login,
-      logout,
-      updateUser,
-      isAuthenticated,
-      loading
-    }}>
+    <AuthContext.Provider
+      value={{
+        user,
+        token,
+        login,
+        logout,
+        updateUser,
+        isAuthenticated,
+        loading,
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );
 };
-
-
-

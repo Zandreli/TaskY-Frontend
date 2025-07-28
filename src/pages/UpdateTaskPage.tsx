@@ -46,7 +46,10 @@ const UpdateTask: React.FC = () => {
       });
     } catch (err) {
       console.error("Failed to fetch task details:", err);
-      setError((err as { response?: { data?: { message?: string } } }).response?.data?.message|| "Failed to fetch task details");
+      setError(
+        (err as { response?: { data?: { message?: string } } }).response?.data
+          ?.message || "Failed to fetch task details",
+      );
     } finally {
       setInitialLoading(false);
     }
@@ -75,8 +78,8 @@ const UpdateTask: React.FC = () => {
       }, 1500);
     } catch (err) {
       const errorMessage =
-      (err as { response?: { data?: { message?: string } } }).response?.data?.message ||
-        "Failed to update task. Please try again.";
+        (err as { response?: { data?: { message?: string } } }).response?.data
+          ?.message || "Failed to update task. Please try again.";
       setError(errorMessage);
     } finally {
       setLoading(false);

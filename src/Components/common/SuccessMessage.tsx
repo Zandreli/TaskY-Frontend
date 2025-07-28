@@ -1,6 +1,6 @@
-import React from 'react';
-import { Alert, AlertTitle, IconButton, Slide } from '@mui/material';
-import { Close as CloseIcon } from '@mui/icons-material';
+import React from "react";
+import { Alert, AlertTitle, IconButton, Slide } from "@mui/material";
+import { Close as CloseIcon } from "@mui/icons-material";
 
 interface SuccessMessageProps {
   message: string;
@@ -8,7 +8,11 @@ interface SuccessMessageProps {
   title?: string;
 }
 
-const SuccessMessage: React.FC<SuccessMessageProps> = ({ message, onClose, title = "Success" }) => {
+const SuccessMessage: React.FC<SuccessMessageProps> = ({
+  message,
+  onClose,
+  title = "Success",
+}) => {
   return (
     <Slide direction="down" in={true} mountOnEnter unmountOnExit>
       <Alert
@@ -16,9 +20,9 @@ const SuccessMessage: React.FC<SuccessMessageProps> = ({ message, onClose, title
         sx={{
           mb: 2,
           borderRadius: 2,
-          '& .MuiAlert-message': {
-            width: '100%'
-          }
+          "& .MuiAlert-message": {
+            width: "100%",
+          },
         }}
         action={
           onClose && (

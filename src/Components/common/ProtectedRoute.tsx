@@ -1,8 +1,8 @@
-import React from 'react';
-import { Navigate, Outlet } from 'react-router-dom';
-import { useAuth } from '../../context/useAuth';
-import { Box } from '@mui/material';
-import LoadingSpinner from './LoadingSpinner';
+import React from "react";
+import { Navigate, Outlet } from "react-router-dom";
+import { useAuth } from "../../context/useAuth";
+import { Box } from "@mui/material";
+import LoadingSpinner from "./LoadingSpinner";
 
 const ProtectedRoute: React.FC = () => {
   const { isAuthenticated, loading } = useAuth();
@@ -12,11 +12,12 @@ const ProtectedRoute: React.FC = () => {
     return (
       <Box
         sx={{
-          minHeight: '100vh',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          background: 'linear-gradient(135deg, #f0fdf4 0%, #dcfce7 50%, #bbf7d0 100%)',
+          minHeight: "100vh",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          background:
+            "linear-gradient(135deg, #f0fdf4 0%, #dcfce7 50%, #bbf7d0 100%)",
         }}
       >
         <LoadingSpinner message="Checking authentication..." />
@@ -34,4 +35,3 @@ const ProtectedRoute: React.FC = () => {
 };
 
 export default ProtectedRoute;
-
