@@ -92,8 +92,8 @@ const Header: React.FC = () => {
             <IconButton onClick={handleProfileMenuOpen} sx={{ p: 0 }}>
               <Avatar
                 src={user?.avatar ? `${process.env.REACT_APP_API_URL?.replace('/api', '') || 'http://localhost:5000'}${user.avatar}` : undefined}
-                sx={{ 
-                  width: 32, 
+                sx={{
+                  width: 32,
                   height: 32,
                   border: '2px solid white',
                   bgcolor: 'rgba(255, 255, 255, 0.2)'

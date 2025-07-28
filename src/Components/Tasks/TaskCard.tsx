@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import type { SxProps } from '@mui/system';
-import { taskService, Task } from '../../services/taskService';
+import { taskService, } from '../../services/taskService';
+import type { Task } from '../../services/taskService';
 import {
   Card,
   CardContent,
