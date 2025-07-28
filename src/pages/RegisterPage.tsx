@@ -18,7 +18,6 @@ interface User {
   username: string;
   emailAddress: string;
   password: string;
-  confirmPassword: string;
 }
 
 function Register() {
@@ -27,7 +26,6 @@ function Register() {
   const [emailAddress, setEmailAddress] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
 
   const { isPending, mutate } = useMutation({
     mutationKey: ["register"],
@@ -47,7 +45,6 @@ function Register() {
       emailAddress,
       username,
       password,
-      confirmPassword,
     };
     mutate(newUser, {
       onSuccess: (data) => {
@@ -116,15 +113,6 @@ function Register() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
-              <TextField
-                label="Confirm Password"
-                type="password"
-                required
-                fullWidth
-                value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
-              />
-
               <Button
                 variant="contained"
                 onClick={handleSignUp}
