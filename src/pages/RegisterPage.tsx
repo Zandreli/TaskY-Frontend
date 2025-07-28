@@ -32,7 +32,7 @@ function Register() {
 const { isPending, mutate } = useMutation({
     mutationKey: ["register"],
     mutationFn: async (newUser: User) => {
-        const response = await axios.post("http://localhost:3000/api/auth/register", newUser);
+        const response = await axios.post("https://task-y-frontend-4odj.vercel.app/api/auth/register", newUser);
         return response.data;
     }
 })
