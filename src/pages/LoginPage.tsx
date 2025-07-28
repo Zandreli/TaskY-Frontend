@@ -32,7 +32,7 @@ const Login: React.FC = () => {
       ...formData,
       [e.target.name]: e.target.value,
     });
-    // Clear error when user starts typing
+    
     if (error) setError(null);
   };
 
