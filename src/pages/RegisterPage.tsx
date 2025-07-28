@@ -31,7 +31,7 @@ function Register() {
     mutationKey: ["register"],
     mutationFn: async (newUser: User) => {
       const response = await axios.post(
-        "https://tasky-backend-tweo.onrender.com/api/auth/register",
+        "https://tasky-backend-tweo.onrender.com/auth/register",
         newUser,
       );
       return response.data;
