@@ -9,8 +9,9 @@ import {
 } from "@mui/material";
 import { Link } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
-import axios from "axios";
+// import axios from "axios";
 import { useState } from "react";
+import api from "../services/api";
 
 interface User {
   firstName: string;
@@ -30,8 +31,8 @@ function Register() {
   const { isPending, mutate } = useMutation({
     mutationKey: ["register"],
     mutationFn: async (newUser: User) => {
-      const response = await axios.post(
-        "https://tasky-backend-tweo.onrender.com/auth/register",
+      const response = await api.post(
+        "/auth/register",
         newUser,
       );
       return response.data;
