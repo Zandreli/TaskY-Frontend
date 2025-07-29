@@ -2,7 +2,7 @@ import axios from "axios";
 
 const api = axios.create({
   baseURL:
-  "https://tasky-backend-1-i47u.onrender.com",
+  "https://tasky-backend-1-i47u.onrender.com/api",
 });
 
 api.interceptors.request.use((config) => {
