@@ -51,7 +51,7 @@ const Trash: React.FC = () => {
 
   const handleTaskUpdate = (taskId: string, updatedTask: Partial<Task>) => {
     if (updatedTask.isDeleted === false) {
-      // Task was restored, remove from trash
+      
       setTasks((prev) => prev.filter((task) => task.id !== taskId));
       setSuccess("Task restored successfully!");
       setTimeout(() => setSuccess(null), 3000);

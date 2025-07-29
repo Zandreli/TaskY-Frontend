@@ -5,7 +5,7 @@ export interface User {
   firstName: string;
   lastName: string;
   username: string;
-  email: string;
+  emailAddress: string;
   avatar?: string;
   dateJoined: string;
   lastProfileUpdate: string;
@@ -15,7 +15,7 @@ export interface UpdateUserData {
   firstName?: string;
   lastName?: string;
   username?: string;
-  email?: string;
+  emailAddress?: string;
 }
 
 export const userService = {

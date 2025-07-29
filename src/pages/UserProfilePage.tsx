@@ -57,7 +57,7 @@ const Profile: React.FC = () => {
     firstName: "",
     lastName: "",
     username: "",
-    email: "",
+    emailAddress: "",
   });
   const [passwordData, setPasswordData] = useState<
     UpdatePasswordData & { confirmPassword: string }
@@ -78,7 +78,7 @@ const Profile: React.FC = () => {
         firstName: user.firstName,
         lastName: user.lastName,
         username: user.username,
-        email: user.email,
+        emailAddress: user.emailAddress,
       });
     }
   }, [user]);
@@ -244,7 +244,7 @@ const Profile: React.FC = () => {
                   <Avatar
                     src={
                       user?.avatar
-                        ? `${process.env.REACT_APP_API_URL?.replace("/api", "") || "http://localhost:3000"}${user.avatar}`
+                        ? `${import.meta.env.REACT_APP_API_URL?.replace("/api", "") || "http://localhost:3000"}${user.avatar}`
                         : undefined
                     }
                     sx={{
@@ -399,7 +399,7 @@ const Profile: React.FC = () => {
                           label="Email"
                           name="email"
                           type="email"
-                          value={formData.email}
+                          value={formData.emailAddress}
                           onChange={handleProfileChange}
                           required
                           disabled={loading}

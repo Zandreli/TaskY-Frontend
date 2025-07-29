@@ -52,10 +52,10 @@ const CompletedTasks: React.FC = () => {
 
   const handleTaskUpdate = (taskId: string, updatedTask: Partial<Task>) => {
     if (updatedTask.isCompleted === false) {
-      // Task was marked as incomplete, remove from completed list
+
       setTasks((prev) => prev.filter((task) => task.id !== taskId));
     } else {
-      // Update task in place
+      
       setTasks((prev) =>
         prev.map((task) =>
           task.id === taskId ? { ...task, ...updatedTask } : task,
