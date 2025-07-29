@@ -25,7 +25,7 @@ export const taskService = {
   getActiveTasks: () => api.get<{ message: string; tasks: Task[] }>("/tasks"),
 
   getCompletedTasks: () =>
-    api.get<{ message: string; tasks: Task[] }>("/auth/tasks/completed"),
+    api.get<{ message: string; tasks: Task[] }>("/api/tasks/completed"),
 
   getDeletedTasks: () =>
     api.get<{ message: string; tasks: Task[] }>("/tasks/trash"),
