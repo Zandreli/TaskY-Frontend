@@ -7,7 +7,7 @@ import LoadingSpinner from "./LoadingSpinner";
 const ProtectedRoute: React.FC = () => {
   const { isAuthenticated, loading } = useAuth();
 
-  // Show loading while checking authentication status
+
   if (loading) {
     return (
       <Box
@@ -25,7 +25,7 @@ const ProtectedRoute: React.FC = () => {
     );
   }
 
-  // Redirect to login if not authenticated
+
   if (!isAuthenticated) {
     return <Navigate to="/login" replace />;
   }
