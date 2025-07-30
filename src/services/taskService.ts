@@ -6,8 +6,8 @@ export interface Task {
   description: string;
   isDeleted: boolean;
   isCompleted: boolean;
-  dateCreated: string;
-  dateUpdated: string;
+  dateCreated: Date;
+  dateUpdated: Date;
   userId: string;
 }
 

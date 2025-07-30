@@ -7,8 +7,8 @@ export interface User {
   username: string;
   emailAddress: string;
   avatar?: string;
-  dateJoined: string;
-  lastProfileUpdate: string;
+  dateJoined: Date;
+  lastProfileUpdate: Date;
 }
 
 export interface UpdateUserData {
