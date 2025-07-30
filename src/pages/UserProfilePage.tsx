@@ -195,7 +195,7 @@ const Profile: React.FC = () => {
     }
   };
 
-  const formatDate = (dateString: string) => {
+  const formatDate = (dateString: Date) => {
     return new Date(dateString).toLocaleDateString("en-US", {
       year: "numeric",
       month: "long",
@@ -244,8 +244,7 @@ const Profile: React.FC = () => {
                   <Avatar
                     src={
                       user?.avatar
-                        ? `${import.meta.env.REACT_APP_API_URL?.replace("/api", "") || "http://localhost:3000"}${user.avatar}`
-                        : undefined
+                        ? `${import.meta.env.REACT_APP_API_URL?.replace("/api", "") || "https://tasky-backend-1-i47u.onrender.com"}${user.avatar}` : undefined
                     }
                     sx={{
                       width: 96,
