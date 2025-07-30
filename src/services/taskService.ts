@@ -25,10 +25,10 @@ export const taskService = {
   getActiveTasks: () => api.get<{ message: string; tasks: Task[] }>("/tasks"),
 
   getCompletedTasks: () =>
-    api.get<{ message: string; tasks: Task[] }>(`/tasks/completed/`),
+    api.get<{ message: string; tasks: Task[] }>(`/tasks/completed`),
 
   getDeletedTasks: () =>
-    api.get<{ message: string; tasks: Task[] }>(`/tasks/trash/`),
+    api.get<{ message: string; tasks: Task[] }>(`/tasks/trash`),
 
   getTaskById: (id: string) =>
     api.get<{ message: string; task: Task }>(`/tasks/${id}`),
