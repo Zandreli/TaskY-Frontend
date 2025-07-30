@@ -50,6 +50,7 @@ function Register() {
     mutate(newUser, {
       onSuccess: (data) => {
         console.log("Registration successful:", data);
+        alert("Registration successful! Please log in.");
       },
       onError: (error) => {
         console.error("Registration failed:", error);
