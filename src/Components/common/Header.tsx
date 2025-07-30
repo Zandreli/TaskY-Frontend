@@ -55,8 +55,8 @@ const Header: React.FC = () => {
 
   const navigationItems = [
     { label: "Tasks", path: "/tasks", icon: <TaskIcon /> },
-    { label: "Completed", path: "/tasks/completed", icon: <ArchiveIcon /> },
-    { label: "Trash", path: "/tasks/trash", icon: <TrashIcon /> },
+    { label: "Completed", path: "/tasks/completed/:id", icon: <ArchiveIcon /> },
+    { label: "Trash", path: "/tasks/trash/:id", icon: <TrashIcon /> },
   ];
 
   const isActiveRoute = (path: string) => {
