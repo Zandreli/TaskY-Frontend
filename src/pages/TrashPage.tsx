@@ -30,13 +30,14 @@ const Trash: React.FC = () => {
   const [success, setSuccess] = useState<string | null>(null);
 
   useEffect(() => {
-    fetchDeletedTasks();
+    const userId = localStorage.getItem("userId");
+    fetchDeletedTasks(userId as string);
   }, []);
 
-  const fetchDeletedTasks = async () => {
+  const fetchDeletedTasks = async (userId: string) => {
     try {
       setLoading(true);
-      const response = await taskService.getDeletedTasks();
+      const response = await taskService.getDeletedTasks(userId);
       setTasks(response.data.tasks);
     } catch (err) {
       console.error("Failed to fetch deleted tasks:", err);

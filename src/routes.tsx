@@ -22,7 +22,7 @@ const router = createBrowserRouter([
       { path: "tasks/new", element: <NewTask /> },
       { path: "tasks/update/:id", element: <UpdateTask /> },
       { path: "tasks/completed/:id", element: <CompletedTasks /> },
-      { path: "tasks/trash/:id", element: <Trash /> },
+      { path: "tasks/trash", element: <Trash /> },
       { path: "profile", element: <Profile /> },
     ],
   },
